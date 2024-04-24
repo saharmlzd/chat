@@ -6,14 +6,13 @@ import {
 } from "../utility/helper";
 
 const OtpInput = ({ allowedOtpLength }) => {
-  const otpInputs = Array(allowedOtpLength).fill(null);
+  // const otpInputs = Array(allowedOtpLength).fill(null);
 
   // const refs = otpInputs.map(() => useRef(null));
-  const refs = [];
+  const refs = Array(allowedOtpLength)
+    .fill(null)
+    .map(() => useRef(null));
 
-  for (let i = 0; i < allowedOtpLength; i++) {
-    refs.push(useRef(null));
-  }
   useEffect(() => {
     focusInput(refs, 0);
   }, []);
