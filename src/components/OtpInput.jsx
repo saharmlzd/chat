@@ -6,26 +6,26 @@ import {
 } from "../utility/helper";
 
 const OtpInput = ({ allowedOtpLength }) => {
-  const otpInputs = Array(allowedOtpLength)
-    .fill(null)
-    .map(() => useRef(null));
+  const otpInputs = Array(allowedOtpLength).fill(null);
+
+  const refs = otpInputs.map(() => useRef(null));
 
   useEffect(() => {
-    focusInput(otpInputs, 0);
+    focusInput(refs, 0);
   }, []);
 
   return (
     <div>
-      {otpInputs.map((inputRef, index) => (
+      {refs.map((inputRef, index) => (
         <input
           key={index}
           type="text"
           className="input_box"
           maxLength={1}
           ref={inputRef}
-          onChange={(e) => handleInputChange(otpInputs, index, e.target.value)}
-          onKeyDown={(e) => handleKeyDown(otpInputs, index, e)}
-          onClick={() => focusInput(otpInputs, index)}
+          onChange={(e) => handleInputChange(refs, index, e.target.value)}
+          onKeyDown={(e) => handleKeyDown(refs, index, e)}
+          onClick={() => focusInput(refs, index)}
         />
       ))}
     </div>
