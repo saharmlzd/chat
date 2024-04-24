@@ -11,7 +11,6 @@ const OtpInput = ({ allowedOtpLength }) => {
     .map(() => useRef(null));
 
   useEffect(() => {
-    // Focus the first input on mount
     focusInput(otpInputs, 0);
   }, []);
 
