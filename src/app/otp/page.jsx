@@ -8,10 +8,7 @@ export default function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (mobile.length === 11) {
-      router.push("/otp");
-    }
+    router.push("/");
   };
 
   return (

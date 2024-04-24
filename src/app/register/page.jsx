@@ -12,10 +12,7 @@ export default function RegisterPage() {
   const [gmail, setGmail] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (mobile.length === 11) {
-      router.push("/otp");
-    }
+    router.push("/otp");
   };
 
   return (
@@ -39,9 +36,8 @@ export default function RegisterPage() {
           type="text"
           onChange={(e) => {
             const { value } = e.target;
-            if (value.length <= 11) {
-              setName(value);
-            }
+
+            setName(value);
           }}
           value={name}
         />
@@ -50,9 +46,8 @@ export default function RegisterPage() {
           type="email"
           onChange={(e) => {
             const { value } = e.target;
-            if (value.length <= 11) {
-              setGmail(value);
-            }
+
+            setGmail(value);
           }}
           value={gmail}
           required
@@ -64,7 +59,7 @@ export default function RegisterPage() {
           maxLength={11}
           onChange={(e) => {
             const { value } = e.target;
-            if (value.length <= 11) {
+            if (value.length <= 13) {
               setMobile(value);
             }
           }}
@@ -72,9 +67,9 @@ export default function RegisterPage() {
         />
 
         <button
-          disabled={mobile.length !== 11 && name && gmail}
+          disabled={mobile.length !== 13 && name && gmail}
           className={`border w-full rounded-3xl p-3 mt-5 text-white ${
-            mobile.length === 11 && name && gmail
+            mobile.length === 13 && name && gmail
               ? "bg-[#36B8B8]"
               : "bg-[#8FDBDB]"
           }`}
