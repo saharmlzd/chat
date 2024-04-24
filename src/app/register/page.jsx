@@ -13,9 +13,7 @@ export default function RegisterPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (mobile.length === 11) {
-      router.push("/otp");
-    }
+    router.push("/otp");
   };
 
   return (
@@ -59,12 +57,12 @@ export default function RegisterPage() {
         />
         <FloatInput
           placeholder="Mobile"
-          type="number"
+          type="tel"
           required
-          maxLength={11}
+          maxLength={13}
           onChange={(e) => {
             const { value } = e.target;
-            if (value.length <= 11) {
+            if (value.length <= 13) {
               setMobile(value);
             }
           }}
@@ -72,9 +70,9 @@ export default function RegisterPage() {
         />
 
         <button
-          disabled={mobile.length !== 11 && name && gmail}
+          disabled={mobile.length !== 13 && name && gmail}
           className={`border w-full rounded-3xl p-3 mt-5 text-white ${
-            mobile.length === 11 && name && gmail
+            mobile.length === 13 && name && gmail
               ? "bg-[#36B8B8]"
               : "bg-[#8FDBDB]"
           }`}

@@ -26,7 +26,7 @@ const OtpInput = ({ allowedOtpLength }) => {
   }, []);
 
   return (
-    <div>
+    <>
       {refs.map((inputRef, index) => (
         <input
           key={index}
@@ -39,7 +39,7 @@ const OtpInput = ({ allowedOtpLength }) => {
           onClick={() => focusInput(refs, index)}
         />
       ))}
-    </div>
+    </>
   );
 };
 

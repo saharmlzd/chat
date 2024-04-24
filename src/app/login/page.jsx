@@ -18,7 +18,7 @@ export default function Login() {
     // } else {
     //   console.log("Invalid credentials");
     // }
-    if (mobile.length === 11) {
+    if (mobile.length === 13) {
       router.push("/otp");
     }
   };
