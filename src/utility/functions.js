@@ -10,7 +10,6 @@ function regexHandler(
   let regex = "";
   if (isNumberValid) {
     regex += "0-9۰-۹";
-    // regex += "09[0-9]{9}$";
   }
   if (isEnglishCharValid) {
     regex += "a-zA-Z";

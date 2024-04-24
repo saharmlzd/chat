@@ -41,11 +41,11 @@ export default function Login() {
       <div className="mr-12 ml-12 flex-col">
         <FloatInput
           placeholder="phone"
-          type="tel"
-          maxLength={13}
+          type="number"
+          maxLength={11}
           onChange={(e) => {
             const { value } = e.target;
-            if (value.length <= 13) {
+            if (value.length <= 11) {
               setMobile(value);
             }
           }}
@@ -53,9 +53,9 @@ export default function Login() {
         />
 
         <button
-          disabled={mobile.length !== 13}
+          disabled={mobile.length !== 11}
           className={`border w-full rounded-3xl p-3 mt-5 text-white ${
-            mobile.length !== 13 ? "bg-[#8FDBDB]" : "bg-[#36B8B8]"
+            mobile.length !== 11 ? "bg-[#8FDBDB]" : "bg-[#36B8B8]"
           }`}
           onClick={handleSubmit}
         >

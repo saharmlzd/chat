@@ -15,6 +15,11 @@ const OtpInput = ({ allowedOtpLength }) => {
 
   // const refs = Array(allowedOtpLength).fill(null);
   // refs.forEach(() => refs.push(useRef(null)));
+
+  //   const refs = [];
+  // for (let i = 0; i < allowedOtpLength; i++) {
+  //   refs.push(useRef(null));
+  // }
   const ref1 = useRef(null);
   const ref2 = useRef(null);
   const ref3 = useRef(null);
