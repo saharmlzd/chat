@@ -13,9 +13,14 @@ const OtpInput = ({ allowedOtpLength }) => {
   //   .fill(null)
   //   .map(() => useRef(null));
 
-  const refs = Array(allowedOtpLength).fill(null);
-  refs.forEach(() => refs.push(useRef(null)));
-
+  // const refs = Array(allowedOtpLength).fill(null);
+  // refs.forEach(() => refs.push(useRef(null)));
+  const ref1 = useRef(null);
+  const ref2 = useRef(null);
+  const ref3 = useRef(null);
+  const ref4 = useRef(null);
+  // etc
+  const refs = [ref1, ref2, ref3, ref4];
   useEffect(() => {
     focusInput(refs, 0);
   }, []);
