@@ -8,8 +8,12 @@ import {
 const OtpInput = ({ allowedOtpLength }) => {
   const otpInputs = Array(allowedOtpLength).fill(null);
 
-  const refs = otpInputs.map(() => useRef(null));
+  // const refs = otpInputs.map(() => useRef(null));
+  const refs = [];
 
+  for (let i = 0; i < allowedOtpLength; i++) {
+    refs.push(useRef(null));
+  }
   useEffect(() => {
     focusInput(refs, 0);
   }, []);
