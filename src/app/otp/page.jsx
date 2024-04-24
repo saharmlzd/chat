@@ -1,14 +1,10 @@
 "use client";
-import { useState } from "react";
 import { ArrowLeft } from "iconsax-react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import OtpInput from "@/components/OtpInput";
 import "@/styles/input.scss";
 export default function Login() {
   const router = useRouter();
-
-  const [mobile, setMobile] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -19,7 +15,7 @@ export default function Login() {
   };
 
   return (
-    <div class="w-full bg-[#E9FEFE]  h-screen ">
+    <div className="w-full bg-[#E9FEFE]  h-screen ">
       <div className="w-90 h-52 bg-[#36B8B8] rounded-3xl mb-20 pl-5 pt-10">
         <ArrowLeft
           size="35"
@@ -39,10 +35,8 @@ export default function Login() {
         <OtpInput allowedOtpLength={4} className="border-[#36B8B8]" />
 
         <button
-          disabled={mobile.length !== 11}
-          className={`border w-full rounded-3xl p-3 mt-5 text-white ${
-            mobile.length !== 11 ? "bg-[#8FDBDB]" : "bg-[#36B8B8]"
-          }`}
+          className="border w-full rounded-3xl p-3 mt-5 text-white 
+             bg-[#36B8B8]"
           onClick={handleSubmit}
         >
           Verify

@@ -19,7 +19,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <div class="w-full bg-[#E9FEFE]  h-screen ">
+    <div className="w-full bg-[#E9FEFE]  h-screen ">
       <div className="w-90 h-52 bg-[#36B8B8] rounded-3xl mb-20 pl-5 pt-10">
         <ArrowLeft
           size="35"
