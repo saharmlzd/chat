@@ -1,0 +1,72 @@
+// .floatLabel {
+//   position: relative;
+//   @apply text-neutral-40  rounded-lg;
+
+//   &.disabled {
+//     @apply text-alert-30;
+//     background-color: transparent;
+//   }
+
+//   .label {
+//     @apply absolute font-semibold text-base pointer-events-none;
+//     right: 0.75rem;
+//     top: 30%;
+//     transition: 0.2s ease all;
+//   }
+
+//   .asLabel {
+//     top: -20%;
+//     font-size: 0.75rem !important;
+//     right: 1.4rem;
+//   }
+
+//   legend {
+//     @apply border-0 m-0;
+//     max-width: fit-content;
+//     margin-right: 0.81rem;
+//     line-height: 0;
+//   }
+
+//   fieldset {
+//     @apply border-stroke-secondary text-text-secondary;
+//     border-width: 0.125rem;
+//     padding: 5px 0;
+//     border-radius: 0.5rem;
+
+//     &.hasError {
+//       @apply border-danger-30;
+//     }
+//   }
+//   .activeFieldset {
+//     border-color: var(--adm-color-primary);
+//     @apply text-text-tertiary;
+//   }
+
+//   .disabledFieldSet {
+//     @apply border-stroke-mainDark text-text-primaryLight;
+//   }
+
+//   .hideLegend {
+//     max-width: 0;
+//     padding: 0;
+//   }
+
+//   input {
+//     -moz-appearance: textfield;
+//     // @apply text-neutral-0 font-semibold text-base;
+//     @apply font-semibold text-base;
+//     @apply text-neutral-0 #{!important};
+
+//     &:disabled {
+//       @apply text-neutral-40;
+//     }
+//   }
+//   input::-webkit-inner-spin-button {
+//     display: none;
+//   }
+//   input::-webkit-outer-spin-button,
+//   input::-webkit-inner-spin-button {
+//     -webkit-appearance: none;
+//     margin: 0;
+//   }
+// }
