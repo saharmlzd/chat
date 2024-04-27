@@ -30,7 +30,7 @@ export default function Login() {
           size="35"
           color="#f5f5f5"
           onClick={router.back}
-          className="mt-4  cursor-pointer"
+          className="mt-4 cursor-pointer"
         />
         <div className="text-2xl font-semibold text-white">Login</div>
         <p className="font-medium text-white text-sm">

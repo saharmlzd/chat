@@ -10,9 +10,13 @@ export default function RegisterPage() {
   const [mobile, setMobile] = useState("");
   const [name, setName] = useState("");
   const [gmail, setGmail] = useState("");
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    router.push("/otp");
+
+  const handleSubmit = () => {
+    if (gmail.includes("@") && gmail.includes(".com")) {
+      router.push("/otp");
+    } else {
+      alert("Please enter a valid email address.");
+    }
   };
 
   return (
@@ -46,7 +50,6 @@ export default function RegisterPage() {
           type="email"
           onChange={(e) => {
             const { value } = e.target;
-
             setGmail(value);
           }}
           value={gmail}
@@ -80,7 +83,7 @@ export default function RegisterPage() {
       </div>
 
       <footer className="mt-5 flex justify-center items-center">
-        <div>Dont have an account </div>
+        <div>Dont have an account</div>
         <Link href="/login" className="no-underline text-[#36B8B8] ml-2">
           Login
         </Link>

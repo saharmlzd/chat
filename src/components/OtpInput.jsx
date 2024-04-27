@@ -31,7 +31,7 @@ const OtpInput = ({ allowedOtpLength }) => {
   }, []);
 
   return (
-    <div>
+    <div className=" justify-center items-center flex">
       {refs.map((inputRef, index) => (
         <input
           key={index}

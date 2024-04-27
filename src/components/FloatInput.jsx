@@ -25,21 +25,19 @@ const FloatInput = ({
   scrollOnFocus = true,
   ...props
 }) => {
+  const onChangeHandler = (e) => {
+    if (["tel", "number"].includes(type)) {
+      e.target.value = regexHandler(e.target.value, true);
+    }
+    e.target.value = convertPersianNumber2English(e.target.value);
+    onChange?.(e);
+  };
+
   return (
     <div>
       <input
         className="border w-full rounded-3xl p-3 bg-[#E9FEFE] mb-3 border-[#36B8B8] "
-        onChange={(e) => {
-          if (["tel", "number"].includes(type)) {
-            e.target.value = regexHandler(e.target.value, true);
-          }
-          // if (["tel"].includes(type) && !e.target.value.startsWith("+98")) {
-          //   e.target.value = "+98" + regexHandler(e.target.value, true);
-          // }
-          e.target.value = convertPersianNumber2English(e.target.value);
-
-          onChange?.(e);
-        }}
+        onChange={onChangeHandler}
         placeholder={placeholder}
         maxLength={maxLength}
         value={value}
