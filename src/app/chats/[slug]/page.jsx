@@ -4,6 +4,13 @@ import axios from "axios";
 
 export default function ChatPage({ params }) {
   const [messages, setMessages] = useState([]);
+  const [atBottom, setAtBottom] = useState(true);
+
+  const divRef = useRef(null);
+
+  const scrollToBottom = () => {
+    divRef.current?.lastElementChild?.scrollIntoView();
+  };
   // TODO : pas aval a hame func am bayad async bashe
   const addMessage = async (text, sender) => {
     const message = {
@@ -12,11 +19,11 @@ export default function ChatPage({ params }) {
     };
     //create new arrya with pre message and new message
     setMessages((prev) => [...prev, message]);
-    console.log(messages, "execution");
     //Waits for the bot response using await.
     const botResponse = await getBotResponse();
 
     setMessages((prev) => [...prev, botResponse]);
+    scrollToBottom();
   };
   //TODO:refactor to dynamic answer
   // const getBotResponse = async () => {
@@ -50,30 +57,32 @@ export default function ChatPage({ params }) {
 
   return (
     <>
-      <div className="w-full  bg-[#fcffff]rounded-3xl h-full">
+      <div className="w-full bg-[#fcffff] rounded-3xl h-full">
         <div className="bg-teal-500 rounded-3xl p-8 sticky top-0">
           <div className="pl-2"> {params.slug}</div>
         </div>
-        <div className="overflow-y-auto">
+
+        <div ref={divRef}>
           {messages.map((message, index) => (
             <div key={index}>
               {message.sender}: {message.text}
             </div>
           ))}
         </div>
-      </div>
-      <div className="sticky bottom-0 bg-[#fcffff]">
-        <input
-          className="w-full p-4 border rounded-3xl "
-          type="text"
-          placeholder="Message"
-          onKeyUp={(e) => {
-            if (e.key === "Enter") {
-              addMessage(e.target.value, "User");
-              e.target.value = "";
-            }
-          }}
-        />
+
+        <div className="sticky bottom-0 bg-[#fcffff]">
+          <input
+            className="w-full p-4 border rounded-3xl"
+            type="text"
+            placeholder="Message"
+            onKeyUp={(e) => {
+              if (e.key === "Enter") {
+                addMessage(e.target.value, "User");
+                e.target.value = "";
+              }
+            }}
+          />
+        </div>
       </div>
     </>
   );
