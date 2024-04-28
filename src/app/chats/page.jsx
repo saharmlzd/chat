@@ -5,10 +5,11 @@ import profile1 from "@/assets/images/1.jpeg";
 import profile2 from "@/assets/images/2.jpeg";
 import profile3 from "@/assets/images/3.jpeg";
 import { useRef, useState, useEffect, useLayoutEffect } from "react";
+
 const users = [
-  { id: 1, name: "Devesh Ojha", profile: profile1 },
+  { id: 1, name: "DeveshOjha", profile: profile1 },
   { id: 2, name: "Sachin", profile: profile2 },
-  { id: 3, name: "Mohit tyagi", profile: profile3 },
+  { id: 3, name: "Mohittyagi", profile: profile3 },
 ];
 export default function HomePage() {
   const [tooltipHeight, setTooltipHeight] = useState(0);
@@ -16,8 +17,8 @@ export default function HomePage() {
   const router = useRouter();
   const outerDiv = useRef(null);
 
-  const handleUserClick = (userId) => {
-    router.push(`/chat/${userId}`);
+  const handleUserClick = (userName) => {
+    router.push(`/chats/${userName}`);
   };
   // useEffect(() => {
   //   const { height } = outerDiv.current.getBoundingClientRect();
@@ -52,7 +53,7 @@ export default function HomePage() {
             <div
               className="px-4 py-5 "
               key={user.id}
-              onClick={() => handleUserClick(user.id)}
+              onClick={() => handleUserClick(user.name)}
             >
               <div>
                 <div className="overflow-x-auto">
