@@ -1,63 +1,73 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
+import axios from "axios";
 
 export default function ChatPage({ params }) {
-  const [pageNumber, setPageNumber] = useState(1);
-  const [messages, setMessages] = useState([
-    {
-      text: "Hi there!",
-      from: "Bot",
-    },
-    {
-      text: "Hello bot!",
-      from: "User",
-    },
-  ]);
-  // useEffect(() => {
-  //   const fetchMessages = async () => {
-  //     const response = await fetch(
-  //       "https://jsonplaceholder.typicode.com/photos",
-  //       {
-  //         method: "GET",
-  //         params: {
-  //           _page: pageNumber,
-  //           _limit: 10,
-  //         },
-  //       }
-  //     );
-  //     const data = await response.json();
-  //     setMessages(data);
-  //     console.log(data, "data");
+  const [messages, setMessages] = useState([]);
+  // TODO : pas aval a hame func am bayad async bashe
+  const addMessage = async (text, sender) => {
+    const message = {
+      text,
+      sender,
+    };
+    //create new arrya with pre message and new message
+    setMessages((prev) => [...prev, message]);
+    console.log(messages, "execution");
+    //Waits for the bot response using await.
+    const botResponse = await getBotResponse();
+
+    setMessages((prev) => [...prev, botResponse]);
+  };
+  //TODO:refactor to dynamic answer
+  // const getBotResponse = async () => {
+  //   const response = await axios.get(
+  //     "https://jsonplaceholder.typicode.com/photos"
+  //   );
+  //   return {
+  //     text: response.data[0].title,
+  //     sender: "Bot",
   //   };
 
-  //   fetchMessages();
-  // }, [pageNumber]);
-  const addMessage = (text, from) => {
-    setMessages([...messages, { text, from }]);
-  };
-  const handleLoadMore = () => {
-    setPageNumber(pageNumber + 1);
+  // };
+  const responses = [];
+
+  const getBotResponse = async () => {
+    if (responses.length === 0) {
+      const response = await axios.get(
+        "https://jsonplaceholder.typicode.com/photos"
+      );
+      responses.push(...response.data);
+    }
+
+    const index = Math.floor(Math.random() * responses.length);
+    const randomResponse = responses[index];
+
+    return {
+      text: randomResponse.title,
+      sender: "Bot",
+    };
   };
 
   return (
-    <div>
-      <div className="w-full bg-[#fcffff]rounded-3xl ">
-        <div className="w-full bg-[#36B8B8] rounded-3xl pt-20 pb-4">
+    <>
+      <div className="w-full  bg-[#fcffff]rounded-3xl h-full">
+        <div className="bg-teal-500 rounded-3xl p-8 sticky top-0">
           <div className="pl-2"> {params.slug}</div>
         </div>
-      </div>
-      <div className="chat-page">
-        <div className="messages">
-          {messages.map((msg) => (
-            <div className={`message ${msg.from}`}>
-              <p>{msg.text}</p>
+        <div className="overflow-y-auto">
+          {messages.map((message, index) => (
+            <div key={index}>
+              {message.sender}: {message.text}
             </div>
           ))}
         </div>
-
+      </div>
+      <div className="sticky bottom-0 bg-[#fcffff]">
         <input
+          className="w-full p-4 border rounded-3xl "
           type="text"
-          onKeyPress={(e) => {
+          placeholder="Message"
+          onKeyUp={(e) => {
             if (e.key === "Enter") {
               addMessage(e.target.value, "User");
               e.target.value = "";
@@ -65,10 +75,6 @@ export default function ChatPage({ params }) {
           }}
         />
       </div>
-      {/* {messages.map((message) => (
-        <div>{message.title}</div>
-      ))} */}
-      {/* <button onClick={handleLoadMore}>Load more</button> */}
-    </div>
+    </>
   );
 }
