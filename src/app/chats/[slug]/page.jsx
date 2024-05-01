@@ -42,7 +42,7 @@ export default function ChatPage({ params }) {
     divRef.current?.lastElementChild?.scrollIntoView();
   };
   const scrollToBottom = () => {
-    window.scrollTo(0, document.body.getBoundingClientRect().height);
+    window.scrollTo(0, document.body?.getBoundingClientRect().height);
   };
 
   useEffect(() => {
@@ -60,7 +60,7 @@ export default function ChatPage({ params }) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
   useEffect(() => {
-    scrollToBottom;
+    scrollToBottom();
   }, [messages]);
   return (
     <>
@@ -80,7 +80,7 @@ export default function ChatPage({ params }) {
             >
               {messages.map((message, index) => (
                 <div
-                  className="mt-4 bg-[#B5E2E2] rounded-3xl p-2 text-sm"
+                  className="mt-4 bg-[#B5E2E2] rounded-3xl p-2 text-sm "
                   key={index}
                 >
                   {message.title}
@@ -116,9 +116,9 @@ export default function ChatPage({ params }) {
                 }
               }}
             />
-            {/* <button className="bg-blue-500 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-full ">
-              Send
-            </button> */}
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-full ">
+              Send
+            </button>
           </div>
         </div>
       </div>
