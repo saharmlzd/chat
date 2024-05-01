@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import Loader from "@/components/Loader";
-import "@/styles/loader.css";
+import { document } from "postcss";
 export default function ChatPage({ params }) {
   const [messages, setMessages] = useState([]);
   const [page, setPage] = useState(1);
@@ -10,17 +10,15 @@ export default function ChatPage({ params }) {
   const [inputHandler, setInputHandler] = useState([]);
 
   const divRef = useRef(null);
-  // const addMessage = async (text, sender) => {
-  //   const message = {
-  //     text,
-  //     sender,
-  //   };
+  const mRef = useRef(null);
+  const addMessage = async (text, sender) => {
+    const message = {
+      text,
+      sender,
+    };
 
-  //   setInputHandler((prev) => [...prev, message]);
-  //   scrollToBottom();
-  // };
-  const scrollToBottom = () => {
-    divRef.current?.lastElementChild?.scrollIntoView();
+    setInputHandler((prev) => [...prev, message]);
+    inputScroll();
   };
   const fetchMessages = async (page) => {
     setLoading(true);
@@ -40,6 +38,13 @@ export default function ChatPage({ params }) {
     setLoading(false);
   };
 
+  const inputScroll = () => {
+    divRef.current?.lastElementChild?.scrollIntoView();
+  };
+  const scrollToBottom = () => {
+    window.scrollTo(0, document.body.getBoundingClientRect().height);
+  };
+
   useEffect(() => {
     fetchMessages(page);
   }, [page]);
@@ -54,39 +59,68 @@ export default function ChatPage({ params }) {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+  useEffect(() => {
+    scrollToBottom;
+  }, [messages]);
   return (
     <>
-      <div className="w-full bg-[#fcffff] rounded-3xl h-full">
-        <div className="bg-teal-500 rounded-3xl h-10 sticky top-0">
-          <div className="pl-2"> {params.slug}</div>
-        </div>
-        {loading && <Loader />}
-        <div>
-          {messages.map((message, index) => (
-            <div className="mt-4 bg-[#B5E2E2] rounded-3xl" key={index}>
-              {message.title}
+      <div className="h-screen flex flex-col ">
+        <div className="bg-gray-200 flex-1 ">
+          <div className="px-4 py-2">
+            <div className="flex items-center mb-2 sticky top-0">
+              <div className="bg-teal-500 rounded-3xl h-12  w-full">
+                <div className="p-2 font-medium"> {params.slug}</div>
+              </div>
             </div>
-          ))}
+            {loading && <Loader />}
+
+            <div
+              className="bg-white rounded-lg p-2 shadow mb-2 max-w-sm "
+              ref={mRef}
+            >
+              {messages.map((message, index) => (
+                <div
+                  className="mt-4 bg-[#B5E2E2] rounded-3xl p-2 text-sm"
+                  key={index}
+                >
+                  {message.title}
+                </div>
+              ))}
+            </div>
+
+            <div className="flex items-center justify-end" ref={divRef}>
+              <div>
+                {inputHandler.map((message, index) => (
+                  <div
+                    key={index}
+                    className="bg-blue-500 text-white rounded-lg p-2  mr-2 max-w-sm mt-4"
+                  >
+                    {message.text}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
 
-        {/* <div ref={divRef}>
-          {inputHandler.map((message, index) => (
-            <div key={index}>{message.text}</div>
-          ))}
-        </div> */}
-        {/* <div className="sticky bottom-0 ">
-          <input
-            className="w-full p-4 border rounded-3xl"
-            type="text"
-            placeholder="Message"
-            onKeyUp={(e) => {
-              if (e.key === "Enter") {
-                addMessage(e.target.value, "User");
-                e.target.value = "";
-              }
-            }}
-          />
-        </div> */}
+        <div className="bg-gray-100 px-4 py-2 sticky bottom-0">
+          <div className="flex items-center ">
+            <input
+              className="w-full border rounded-full py-2 px-4 mr-2"
+              type="text"
+              placeholder="Message"
+              onKeyUp={(e) => {
+                if (e.key === "Enter") {
+                  addMessage(e.target.value, "User");
+                  e.target.value = "";
+                }
+              }}
+            />
+            {/* <button className="bg-blue-500 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-full ">
+              Send
+            </button> */}
+          </div>
+        </div>
       </div>
     </>
   );
