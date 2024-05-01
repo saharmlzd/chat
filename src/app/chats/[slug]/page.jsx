@@ -33,7 +33,7 @@ export default function ChatPage({ params }) {
       }
     );
 
-    setMessages((prev) => [...data, ...prev]);
+    setMessages((prev) => [...prev, ...data].reverse());
 
     setLoading(false);
   };
@@ -41,9 +41,9 @@ export default function ChatPage({ params }) {
   const inputScroll = () => {
     divRef.current?.lastElementChild?.scrollIntoView();
   };
-  const scrollToBottom = () => {
-    window.scrollTo(0, document.body?.getBoundingClientRect().height);
-  };
+  // const scrollToBottom = () => {
+  //   window.scrollTo(0, document.body?.getBoundingClientRect().height);
+  // };
 
   useEffect(() => {
     fetchMessages(page);
@@ -59,28 +59,28 @@ export default function ChatPage({ params }) {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
+  // useEffect(() => {
+  //   scrollToBottom();
+  // }, [messages]);
   return (
     <>
-      <div className="h-screen flex flex-col ">
+      <div className="h-screen flex flex-col">
         <div className="bg-gray-200 flex-1 ">
-          <div className="px-4 py-2">
+          <div className="px-4 py-2 ">
             <div className="flex items-center mb-2 sticky top-0">
-              <div className="bg-teal-500 rounded-3xl h-12  w-full">
-                <div className="p-2 font-medium"> {params.slug}</div>
+              <div className="bg-teal-500 rounded-3xl h-14 w-full">
+                <div className="p-4 font-medium"> {params.slug}</div>
               </div>
             </div>
             {loading && <Loader />}
 
             <div
-              className="bg-white rounded-lg p-2 shadow mb-2 max-w-sm "
+              className=" flex h-full rounded-lg p-2  mb-2 max-w-sm  flex-col-reverse	"
               ref={mRef}
             >
               {messages.map((message, index) => (
                 <div
-                  className="mt-4 bg-[#B5E2E2] rounded-3xl p-2 text-sm "
+                  className="mt-4 bg-[#B5E2E2]  rounded-3xl p-2 text-sm "
                   key={index}
                 >
                   {message.title}
@@ -93,7 +93,7 @@ export default function ChatPage({ params }) {
                 {inputHandler.map((message, index) => (
                   <div
                     key={index}
-                    className="bg-blue-500 text-white rounded-lg p-2  mr-2 max-w-sm mt-4"
+                    className="bg-blue-500 text-white rounded-3xl p-2  mr-2 max-w-sm mt-4"
                   >
                     {message.text}
                   </div>
@@ -112,6 +112,7 @@ export default function ChatPage({ params }) {
               onKeyUp={(e) => {
                 if (e.key === "Enter") {
                   addMessage(e.target.value, "User");
+
                   e.target.value = "";
                 }
               }}
