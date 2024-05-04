@@ -1,10 +1,9 @@
 "use client";
-import Footer from "@/components/Footer";
 import { useRouter } from "next/navigation";
 import profile1 from "@/assets/images/1.jpeg";
 import profile2 from "@/assets/images/2.jpeg";
 import profile3 from "@/assets/images/3.jpeg";
-import { useRef, useState, useEffect, useLayoutEffect } from "react";
+import { useRef } from "react";
 
 const users = [
   { id: 1, name: "DeveshOjha", profile: profile1 },
@@ -12,8 +11,6 @@ const users = [
   { id: 3, name: "Mohittyagi", profile: profile3 },
 ];
 export default function HomePage() {
-  const [tooltipHeight, setTooltipHeight] = useState(0);
-
   const router = useRouter();
   const outerDiv = useRef(null);
 
@@ -85,7 +82,6 @@ export default function HomePage() {
             </div>
           ))}
         </div>
-        {/* <Footer /> */}
       </div>
     </>
   );

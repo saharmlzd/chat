@@ -1,17 +1,38 @@
 "use client";
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import axios from "axios";
 import Loader from "@/components/Loader";
-import { document } from "postcss";
 import useEffectOnce from "@/hooks/useEffectOnce";
+import { useDispatch, useSelector } from "react-redux";
+import { addMessage } from "@/store/messages/messagesSlice";
 export default function ChatPage({ params }) {
   const [messages, setMessages] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
 
+  const dispatch = useDispatch();
+  const userMessages = useSelector((state) => state.messages.messages);
+  console.log(userMessages, "userMessages");
   const messagesRef = useRef(null);
   const inputRef = useRef(null);
-  const addMessage = async () => {
+  const allMessages = useMemo(() => {
+    const correspondingMessages = userMessages.filter(
+      (msg) => msg.to === params.slug
+    );
+
+    return [...correspondingMessages, ...messages].map((message) => (
+      <div
+        className={`mt-4 rounded-3xl p-2 text-sm", ${
+          message.self ? "items-start bg-red-600" : "items-end bg-[#B5E2E2]"
+        }`}
+        key={message.id}
+      >
+        {message.title}
+      </div>
+    ));
+  }, [messages, userMessages, params.slug]);
+
+  const addNewMessage = async () => {
     const title = inputRef.current.value;
     if (!title.trim()) {
       return;
@@ -22,9 +43,10 @@ export default function ChatPage({ params }) {
 
       sender: "user",
       self: true,
+      to: params.slug,
     };
 
-    setMessages((prev) => [message, ...prev]);
+    dispatch(addMessage(message));
     inputRef.current.value = "";
     inputScroll();
   };
@@ -52,9 +74,6 @@ export default function ChatPage({ params }) {
   const inputScroll = () => {
     messagesRef.current?.scrollTo(0, 0);
   };
-  // const scrollToBottom = () => {
-  //   window.scrollTo(0, document.body?.getBoundingClientRect().height);
-  // };
 
   useEffectOnce(fetchMessages, [page]);
 
@@ -66,9 +85,6 @@ export default function ChatPage({ params }) {
     }
   };
 
-  // useEffect(() => {
-  //   scrollToBottom();
-  // }, [messages]);
   return (
     <>
       <div className="h-screen flex flex-col flex-1 py-2 bg-gray-200 relative ">
@@ -87,18 +103,7 @@ export default function ChatPage({ params }) {
           ref={messagesRef}
           onScroll={handleScroll}
         >
-          {messages.map((message) => (
-            <div
-              className={`mt-4 rounded-3xl p-2 text-sm", ${
-                message.self
-                  ? "items-start bg-red-600"
-                  : "items-end bg-[#B5E2E2]"
-              }`}
-              key={message.id}
-            >
-              {message.title}
-            </div>
-          ))}
+          {allMessages}
         </div>
 
         <div className="bg-gray-100 px-4 py-2 sticky bottom-0">
@@ -110,14 +115,14 @@ export default function ChatPage({ params }) {
               ref={inputRef}
               onKeyUp={(e) => {
                 if (e.key === "Enter") {
-                  addMessage();
+                  addNewMessage();
 
                   e.target.value = "";
                 }
               }}
             />
             <button
-              onClick={() => addMessage()}
+              onClick={() => addNewMessage()}
               className="bg-blue-500 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-full "
             >
               Send
